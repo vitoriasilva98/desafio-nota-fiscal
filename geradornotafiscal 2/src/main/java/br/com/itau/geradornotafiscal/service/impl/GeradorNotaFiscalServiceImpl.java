@@ -94,19 +94,7 @@ public class GeradorNotaFiscalServiceImpl implements GeradorNotaFiscalService{
 				.orElse(null);
 
 		double valorFrete = pedido.getValorFrete();
-		double valorFreteComPercentual =0;
-
-		if (regiao == Regiao.NORTE) {
-			valorFreteComPercentual = valorFrete * 1.08;
-		} else if (regiao == Regiao.NORDESTE) {
-			valorFreteComPercentual = valorFrete * 1.085;
-		} else if (regiao == Regiao.CENTRO_OESTE) {
-			valorFreteComPercentual = valorFrete * 1.07;
-		} else if (regiao == Regiao.SUDESTE) {
-			valorFreteComPercentual = valorFrete * 1.048;
-		} else if (regiao == Regiao.SUL) {
-			valorFreteComPercentual = valorFrete * 1.06;
-		}
+        double valorFreteComPercentual = regiao.getPercentualRegiao() * valorFrete;
 
 		// Create the NotaFiscal object
 		String idNotaFiscal = UUID.randomUUID().toString();
