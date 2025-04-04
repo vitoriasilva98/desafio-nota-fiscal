@@ -1,4 +1,4 @@
-package br.com.itau.geradornotafiscal.model;
+package br.com.itau.geradornotafiscal.enums;
 
 import br.com.itau.geradornotafiscal.interfaces.Tributavel;
 import lombok.Getter;

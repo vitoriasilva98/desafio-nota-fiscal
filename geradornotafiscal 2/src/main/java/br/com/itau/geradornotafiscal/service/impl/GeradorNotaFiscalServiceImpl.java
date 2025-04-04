@@ -1,5 +1,9 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
+import br.com.itau.geradornotafiscal.enums.Finalidade;
+import br.com.itau.geradornotafiscal.enums.Regiao;
+import br.com.itau.geradornotafiscal.enums.TipoPessoa;
+import br.com.itau.geradornotafiscal.enums.TributacaoPessoaFisica;
 import br.com.itau.geradornotafiscal.model.*;
 import br.com.itau.geradornotafiscal.service.CalculadoraAliquotaProduto;
 import br.com.itau.geradornotafiscal.service.GeradorNotaFiscalService;

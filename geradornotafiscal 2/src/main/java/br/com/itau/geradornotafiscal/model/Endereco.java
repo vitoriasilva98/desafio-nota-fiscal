@@ -1,5 +1,7 @@
 package br.com.itau.geradornotafiscal.model;
 
+import br.com.itau.geradornotafiscal.enums.Finalidade;
+import br.com.itau.geradornotafiscal.enums.Regiao;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Builder;

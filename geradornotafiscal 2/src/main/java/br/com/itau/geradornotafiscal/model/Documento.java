@@ -1,5 +1,6 @@
 package br.com.itau.geradornotafiscal.model;
 
+import br.com.itau.geradornotafiscal.enums.TipoDocumento;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Getter;

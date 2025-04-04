@@ -1,5 +1,9 @@
 package br.com.itau.calculadoratributos;
 
+import br.com.itau.geradornotafiscal.enums.Finalidade;
+import br.com.itau.geradornotafiscal.enums.Regiao;
+import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
+import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.model.*;
 import br.com.itau.geradornotafiscal.service.CalculadoraAliquotaProduto;
 import br.com.itau.geradornotafiscal.service.impl.GeradorNotaFiscalServiceImpl;
@@ -9,13 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-import java.time.LocalDateTime;
 import java.util.Arrays;
-import java.util.List;
-import java.util.UUID;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.mockito.Mockito.when;
 
 public class GeradorNotaFiscalServiceImplTest {
 

@@ -2,6 +2,8 @@ package br.com.itau.geradornotafiscal.model;
 
 import java.util.List;
 
+import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
+import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.*;
 
