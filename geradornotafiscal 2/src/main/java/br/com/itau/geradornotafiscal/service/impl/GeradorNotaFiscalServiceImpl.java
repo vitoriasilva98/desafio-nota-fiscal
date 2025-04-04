@@ -6,50 +6,25 @@ import br.com.itau.geradornotafiscal.service.GeradorNotaFiscalService;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Optional;
 import java.util.UUID;
 
 @Service
-public class GeradorNotaFiscalServiceImpl implements GeradorNotaFiscalService{
-	@Override
-	public NotaFiscal gerarNotaFiscal(Pedido pedido) {
+public class GeradorNotaFiscalServiceImpl implements GeradorNotaFiscalService {
 
-        Destinatario destinatario = pedido.getDestinatario();
-        TipoPessoa tipoPessoa = destinatario.getTipoPessoa();
-        List<ItemNotaFiscal> itemNotaFiscalList = new ArrayList<>();
+    @Override
+    public NotaFiscal gerarNotaFiscal(Pedido pedido) {
+
         CalculadoraAliquotaProduto calculadoraAliquotaProduto = new CalculadoraAliquotaProduto();
-
-        double aliquota = 0.0;
-        double valorTotalItens = pedido.getValorTotalItens();
-
-        if (tipoPessoa == TipoPessoa.FISICA) {
-            aliquota = TributacaoPessoaFisica.FISICA.obterTaxaAliquota(valorTotalItens);
-        } else if (tipoPessoa == TipoPessoa.JURIDICA) {
-            aliquota = destinatario.getRegimeTributacao().obterTaxaAliquota(valorTotalItens);
-        }
-
-        itemNotaFiscalList = calculadoraAliquotaProduto.calcularAliquota(pedido.getItens(), aliquota);
-        //Regras diferentes para frete
-
-        Regiao regiao = destinatario.getEnderecos().stream()
-                .filter(endereco -> endereco.getFinalidade() == Finalidade.ENTREGA || endereco.getFinalidade() == Finalidade.COBRANCA_ENTREGA)
-                .map(Endereco::getRegiao)
-                .findFirst()
-                .orElse(null);
-
-        double valorFrete = pedido.getValorFrete();
-        double valorFreteComPercentual = regiao.getPercentualRegiao() * valorFrete;
-
-        // Create the NotaFiscal object
-        String idNotaFiscal = UUID.randomUUID().toString();
+        double aliquotaPercentual = obterAliquota(pedido);
+        double valorFrete = calcularValorFreteComPercentual(pedido);
 
         NotaFiscal notaFiscal = NotaFiscal.builder()
-                .idNotaFiscal(idNotaFiscal)
+                .idNotaFiscal(UUID.randomUUID().toString())
                 .data(LocalDateTime.now())
                 .valorTotalItens(pedido.getValorTotalItens())
-                .valorFrete(valorFreteComPercentual)
-                .itens(itemNotaFiscalList)
+                .valorFrete(valorFrete)
+                .itens(calculadoraAliquotaProduto.calcularAliquota(pedido.getItens(), aliquotaPercentual))
                 .destinatario(pedido.getDestinatario())
                 .build();
 
@@ -59,5 +34,31 @@ public class GeradorNotaFiscalServiceImpl implements GeradorNotaFiscalService{
         new FinanceiroService().enviarNotaFiscalParaContasReceber(notaFiscal);
 
         return notaFiscal;
+    }
+
+    private double obterAliquota(Pedido pedido) {
+
+        double aliquota = 0.0;
+        double valorTotalItens = pedido.getValorTotalItens();
+        TipoPessoa tipoPessoa = pedido.getDestinatario().getTipoPessoa();
+
+        if (tipoPessoa == TipoPessoa.FISICA) {
+            aliquota = TributacaoPessoaFisica.FISICA.obterTaxaAliquota(valorTotalItens);
+        } else if (tipoPessoa == TipoPessoa.JURIDICA) {
+            aliquota = pedido.getDestinatario().getRegimeTributacao().obterTaxaAliquota(valorTotalItens);
+        }
+
+        return aliquota;
+    }
+
+    private double calcularValorFreteComPercentual(Pedido pedido) {
+        double valorFrete = pedido.getValorFrete();
+
+        Optional<Regiao> regiao = pedido.getDestinatario().getEnderecos().stream()
+                .filter(endereco -> endereco.getFinalidade() == Finalidade.ENTREGA || endereco.getFinalidade() == Finalidade.COBRANCA_ENTREGA)
+                .map(Endereco::getRegiao)
+                .findFirst();
+
+        return regiao.map(value -> value.getPercentualRegiao() * valorFrete).orElse(0.0);
     }
 }
