@@ -1,8 +1,13 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
+import br.com.itau.geradornotafiscal.service.IEstoqueService;
+import org.springframework.stereotype.Service;
 
-public class EstoqueService {
+@Service
+public class EstoqueServiceImpl implements IEstoqueService {
+
+    @Override
     public void enviarNotaFiscalParaBaixaEstoque(NotaFiscal notaFiscal) {
         try {
             //Simula envio de nota fiscal para baixa de estoque
