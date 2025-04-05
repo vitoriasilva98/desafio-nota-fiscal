@@ -5,12 +5,10 @@ import br.com.itau.geradornotafiscal.enums.Regiao;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.model.*;
-import br.com.itau.geradornotafiscal.service.impl.CalculadoraAliquotaProduto;
 import br.com.itau.geradornotafiscal.service.impl.IGeradorNotaFiscalServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
-import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 import java.util.Arrays;
@@ -22,14 +20,10 @@ public class IGeradorNotaFiscalServiceImplTest {
     @InjectMocks
     private IGeradorNotaFiscalServiceImpl geradorNotaFiscalService;
 
-    @Mock
-    private CalculadoraAliquotaProduto calculadoraAliquotaProduto;
-
     @BeforeEach
     public void setup() {
         MockitoAnnotations.openMocks(this);
     }
-
 
 
     @Test
