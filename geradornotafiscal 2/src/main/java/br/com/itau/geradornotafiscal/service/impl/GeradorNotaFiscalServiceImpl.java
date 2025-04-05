@@ -17,7 +17,7 @@ import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
-public class IGeradorNotaFiscalServiceImpl implements IGeradorNotaFiscalService {
+public class GeradorNotaFiscalServiceImpl implements IGeradorNotaFiscalService {
 
     private final IEstoqueService iEstoqueService;
     private final IRegistroService iRegistroService;

@@ -5,7 +5,7 @@ import br.com.itau.geradornotafiscal.enums.Regiao;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.model.*;
-import br.com.itau.geradornotafiscal.service.impl.IGeradorNotaFiscalServiceImpl;
+import br.com.itau.geradornotafiscal.service.impl.GeradorNotaFiscalServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,10 +15,10 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class IGeradorNotaFiscalServiceImplTest {
+public class GeradorNotaFiscalServiceImplTest {
 
     @InjectMocks
-    private IGeradorNotaFiscalServiceImpl geradorNotaFiscalService;
+    private GeradorNotaFiscalServiceImpl geradorNotaFiscalService;
 
     @BeforeEach
     public void setup() {
