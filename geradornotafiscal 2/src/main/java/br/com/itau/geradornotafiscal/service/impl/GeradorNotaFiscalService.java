@@ -13,32 +13,36 @@ import java.util.UUID;
 @Service
 public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
 
-    private final IEstoqueService iEstoqueService;
-    private final IRegistroService iRegistroService;
-    private final IEntregaService iEntregaService;
-    private final IFinanceiroService iFinanceiroService;
+    private final IEstoqueService estoqueService;
+    private final IRegistroService registroService;
+    private final IEntregaService entregaService;
+    private final IFinanceiroService financeiroService;
     private final ItemNotaFiscalFactory itemNotaFiscalFactory;
 
     @Override
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
 
-        double aliquotaPercentual = pedido.getDestinatario().obterAliquota(pedido.getValorTotalItens());
-        double frenteComPercentual = pedido.getDestinatario().calcularFreteComBaseNaRegiao(pedido.getValorFrete());
+        NotaFiscal notaFiscal = criarNotaFiscal(pedido);
 
-        NotaFiscal notaFiscal = NotaFiscal.builder()
+        estoqueService.enviarNotaFiscalParaBaixaEstoque(notaFiscal);
+        registroService.registrarNotaFiscal(notaFiscal);
+        entregaService.agendarEntrega(notaFiscal);
+        financeiroService.enviarNotaFiscalParaContasReceber(notaFiscal);
+
+        return notaFiscal;
+    }
+
+    private NotaFiscal criarNotaFiscal(Pedido pedido) {
+        double aliquotaPercentual = pedido.getDestinatario().obterAliquota(pedido.getValorTotalItens());
+        double freteComPercentual = pedido.getDestinatario().calcularFreteComBaseNaRegiao(pedido.getValorFrete());
+
+        return NotaFiscal.builder()
                 .idNotaFiscal(UUID.randomUUID().toString())
                 .data(LocalDateTime.now())
                 .valorTotalItens(pedido.getValorTotalItens())
-                .valorFrete(frenteComPercentual)
+                .valorFrete(freteComPercentual)
                 .itens(itemNotaFiscalFactory.criar(pedido.getItens(), aliquotaPercentual))
                 .destinatario(pedido.getDestinatario())
                 .build();
-
-        iEstoqueService.enviarNotaFiscalParaBaixaEstoque(notaFiscal);
-        iRegistroService.registrarNotaFiscal(notaFiscal);
-        iEntregaService.agendarEntrega(notaFiscal);
-        iFinanceiroService.enviarNotaFiscalParaContasReceber(notaFiscal);
-
-        return notaFiscal;
     }
 }
