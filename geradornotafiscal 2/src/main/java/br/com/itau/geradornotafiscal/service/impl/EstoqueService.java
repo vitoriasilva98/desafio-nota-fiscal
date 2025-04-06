@@ -1,18 +1,17 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
-import br.com.itau.geradornotafiscal.service.IRegistroService;
+import br.com.itau.geradornotafiscal.service.IEstoqueService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RegistroServiceImpl implements IRegistroService {
+public class EstoqueService implements IEstoqueService {
 
     @Override
-    public void registrarNotaFiscal(NotaFiscal notaFiscal) {
-
+    public void enviarNotaFiscalParaBaixaEstoque(NotaFiscal notaFiscal) {
         try {
-            //Simula o registro da nota fiscal
-            Thread.sleep(500);
+            //Simula envio de nota fiscal para baixa de estoque
+            Thread.sleep(380);
         } catch (InterruptedException e) {
             throw new RuntimeException(e);
         }

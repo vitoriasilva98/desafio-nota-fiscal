@@ -5,7 +5,7 @@ import br.com.itau.geradornotafiscal.service.IFinanceiroService;
 import org.springframework.stereotype.Service;
 
 @Service
-public class FinanceiroServiceImpl implements IFinanceiroService {
+public class FinanceiroService implements IFinanceiroService {
 
     @Override
     public void enviarNotaFiscalParaContasReceber(NotaFiscal notaFiscal) {

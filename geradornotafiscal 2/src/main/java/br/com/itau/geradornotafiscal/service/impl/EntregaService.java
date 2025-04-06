@@ -8,7 +8,7 @@ import org.springframework.stereotype.Service;
 
 @RequiredArgsConstructor
 @Service
-public class EntregaServiceImpl implements IEntregaService {
+public class EntregaService implements IEntregaService {
 
     private final EntregaIntegrationPort entregaIntegrationPort;
 
