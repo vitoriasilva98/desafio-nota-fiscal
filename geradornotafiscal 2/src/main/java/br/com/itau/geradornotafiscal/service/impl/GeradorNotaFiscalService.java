@@ -1,7 +1,5 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
-import br.com.itau.geradornotafiscal.enums.TipoPessoa;
-import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPF;
 import br.com.itau.geradornotafiscal.factories.ItemNotaFiscalFactory;
 import br.com.itau.geradornotafiscal.model.*;
 import br.com.itau.geradornotafiscal.service.*;

@@ -2,7 +2,6 @@ package br.com.itau.geradornotafiscal.web.controller;
 
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 
 import br.com.itau.geradornotafiscal.model.Pedido;
 import br.com.itau.geradornotafiscal.service.IGeradorNotaFiscalService;
