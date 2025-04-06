@@ -1,7 +1,5 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
-import br.com.itau.geradornotafiscal.enums.Finalidade;
-import br.com.itau.geradornotafiscal.enums.Regiao;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.enums.TributacaoPessoaFisica;
 import br.com.itau.geradornotafiscal.model.*;
@@ -11,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
 import java.util.List;
-import java.util.Optional;
 import java.util.UUID;
 import java.util.stream.Collectors;
 
@@ -23,6 +20,7 @@ public class GeradorNotaFiscalServiceImpl implements IGeradorNotaFiscalService {
     private final IRegistroService iRegistroService;
     private final IEntregaService iEntregaService;
     private final IFinanceiroService iFinanceiroService;
+    private final IFreteService iFreteService;
 
     @Override
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
@@ -33,7 +31,7 @@ public class GeradorNotaFiscalServiceImpl implements IGeradorNotaFiscalService {
                 .idNotaFiscal(UUID.randomUUID().toString())
                 .data(LocalDateTime.now())
                 .valorTotalItens(pedido.getValorTotalItens())
-                .valorFrete(calcularValorFreteComPercentual(pedido))
+                .valorFrete(iFreteService.calcularValorFreteComPercentual(pedido))
                 .itens(criarItensNotaFiscalComTributo(pedido.getItens(), aliquotaPercentual))
                 .destinatario(pedido.getDestinatario())
                 .build();
@@ -59,17 +57,6 @@ public class GeradorNotaFiscalServiceImpl implements IGeradorNotaFiscalService {
         }
 
         return aliquota;
-    }
-
-    private double calcularValorFreteComPercentual(Pedido pedido) {
-        double valorFrete = pedido.getValorFrete();
-
-        Optional<Regiao> regiao = pedido.getDestinatario().getEnderecos().stream()
-                .filter(endereco -> endereco.getFinalidade() == Finalidade.ENTREGA || endereco.getFinalidade() == Finalidade.COBRANCA_ENTREGA)
-                .map(Endereco::getRegiao)
-                .findFirst();
-
-        return regiao.map(value -> value.getPercentualRegiao() * valorFrete).orElse(0.0);
     }
 
     private List<ItemNotaFiscal> criarItensNotaFiscalComTributo(List<Item> itens, double aliquotaPercentual) {
