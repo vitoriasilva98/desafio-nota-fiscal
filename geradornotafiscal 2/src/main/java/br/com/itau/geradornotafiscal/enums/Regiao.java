@@ -1,8 +1,10 @@
 package br.com.itau.geradornotafiscal.enums;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 
 @Getter
+@AllArgsConstructor
 public enum Regiao {
     NORTE(1.08),
     NORDESTE(1.085),
@@ -11,8 +13,4 @@ public enum Regiao {
     SUL(1.06);
 
     private final Double percentualRegiao;
-
-    Regiao(Double percentualRegiao) {
-        this.percentualRegiao = percentualRegiao;
-    }
 }

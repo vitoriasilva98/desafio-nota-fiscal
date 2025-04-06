@@ -35,4 +35,12 @@ public class Endereco {
 
     @JsonProperty("regiao")
     private Regiao regiao;
+
+    public boolean ehEnderecoDeEntrega() {
+        return this.finalidade == Finalidade.ENTREGA || this.finalidade == Finalidade.COBRANCA_ENTREGA;
+    }
+
+    public double aplicarPercentualFrete(double valorFrete) {
+        return this.regiao.getPercentualRegiao() * valorFrete;
+    }
 }

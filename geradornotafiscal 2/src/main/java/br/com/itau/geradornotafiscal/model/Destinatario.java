@@ -37,6 +37,14 @@ public class Destinatario {
 			return this.regimeTributacao.obterTaxaAliquota(valorTotalItens);
 		}
 	}
+
+	public double calcularFreteComBaseNaRegiao(double valorFrete) {
+		return enderecos.stream()
+				.filter(Endereco::ehEnderecoDeEntrega)
+				.map(e -> e.aplicarPercentualFrete(valorFrete))
+				.findFirst()
+				.orElse(0.0);
+	}
 }
 
 

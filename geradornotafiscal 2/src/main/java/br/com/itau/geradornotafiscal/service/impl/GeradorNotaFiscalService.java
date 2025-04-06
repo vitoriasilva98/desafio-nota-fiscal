@@ -17,19 +17,19 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
     private final IRegistroService iRegistroService;
     private final IEntregaService iEntregaService;
     private final IFinanceiroService iFinanceiroService;
-    private final IFreteService iFreteService;
     private final ItemNotaFiscalFactory itemNotaFiscalFactory;
 
     @Override
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
 
         double aliquotaPercentual = pedido.getDestinatario().obterAliquota(pedido.getValorTotalItens());
+        double frenteComPercentual = pedido.getDestinatario().calcularFreteComBaseNaRegiao(pedido.getValorFrete());
 
         NotaFiscal notaFiscal = NotaFiscal.builder()
                 .idNotaFiscal(UUID.randomUUID().toString())
                 .data(LocalDateTime.now())
                 .valorTotalItens(pedido.getValorTotalItens())
-                .valorFrete(iFreteService.calcularValorFreteComPercentual(pedido))
+                .valorFrete(frenteComPercentual)
                 .itens(itemNotaFiscalFactory.criar(pedido.getItens(), aliquotaPercentual))
                 .destinatario(pedido.getDestinatario())
                 .build();
