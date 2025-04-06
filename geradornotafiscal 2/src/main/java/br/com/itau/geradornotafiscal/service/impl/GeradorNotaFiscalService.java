@@ -1,7 +1,7 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
-import br.com.itau.geradornotafiscal.enums.TributacaoPessoaFisica;
+import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPF;
 import br.com.itau.geradornotafiscal.factories.ItemNotaFiscalFactory;
 import br.com.itau.geradornotafiscal.model.*;
 import br.com.itau.geradornotafiscal.service.*;
@@ -51,7 +51,7 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
         TipoPessoa tipoPessoa = pedido.getDestinatario().getTipoPessoa();
 
         if (tipoPessoa == TipoPessoa.FISICA) {
-            aliquota = TributacaoPessoaFisica.FISICA.obterTaxaAliquota(valorTotalItens);
+            aliquota = RegimeTributacaoPF.IMPOSTO_DE_RENDA.obterTaxaAliquota(valorTotalItens);
         } else if (tipoPessoa == TipoPessoa.JURIDICA) {
             aliquota = pedido.getDestinatario().getRegimeTributacao().obterTaxaAliquota(valorTotalItens);
         }

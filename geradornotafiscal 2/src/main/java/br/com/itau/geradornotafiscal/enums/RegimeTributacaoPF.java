@@ -6,11 +6,9 @@ import lombok.Getter;
 
 @Getter
 @AllArgsConstructor
-public enum RegimeTributacaoPJ implements Tributavel {
-    SIMPLES_NACIONAL(0.03, 0.07, 0.13, 0.19),
-    LUCRO_REAL(0.03, 0.09, 0.15, 0.20),
-    LUCRO_PRESUMIDO(0.03, 0.09, 0.16, 0.20),
-    OUTROS(0.0, 0.0, 0.0, 0.0);
+public enum RegimeTributacaoPF implements Tributavel {
+
+    IMPOSTO_DE_RENDA(0.0, 0.12, 0.15, 0.17);
 
     private final double faixa1;
     private final double faixa2;
@@ -19,15 +17,14 @@ public enum RegimeTributacaoPJ implements Tributavel {
 
     @Override
     public double obterTaxaAliquota(double valorTotalItens) {
-        if (valorTotalItens < 1000) {
-            return this.getFaixa1();
+        if (valorTotalItens < 500) {
+            return getFaixa1();
         } else if (valorTotalItens <= 2000) {
-            return this.getFaixa2();
-        } else if (valorTotalItens <= 5000) {
-            return this.getFaixa3();
+            return getFaixa2();
+        } else if (valorTotalItens <= 3500) {
+            return getFaixa3();
         } else {
-            return this.getFaixa4();
+            return getFaixa4();
         }
     }
 }
-
