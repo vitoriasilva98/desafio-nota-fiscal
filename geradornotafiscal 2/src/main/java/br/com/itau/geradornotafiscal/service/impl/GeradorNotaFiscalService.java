@@ -2,15 +2,14 @@ package br.com.itau.geradornotafiscal.service.impl;
 
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.enums.TributacaoPessoaFisica;
+import br.com.itau.geradornotafiscal.factories.ItemNotaFiscalFactory;
 import br.com.itau.geradornotafiscal.model.*;
 import br.com.itau.geradornotafiscal.service.*;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDateTime;
-import java.util.List;
 import java.util.UUID;
-import java.util.stream.Collectors;
 
 @RequiredArgsConstructor
 @Service
@@ -21,6 +20,7 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
     private final IEntregaService iEntregaService;
     private final IFinanceiroService iFinanceiroService;
     private final IFreteService iFreteService;
+    private final ItemNotaFiscalFactory itemNotaFiscalFactory;
 
     @Override
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
@@ -32,7 +32,7 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
                 .data(LocalDateTime.now())
                 .valorTotalItens(pedido.getValorTotalItens())
                 .valorFrete(iFreteService.calcularValorFreteComPercentual(pedido))
-                .itens(criarItensNotaFiscalComTributo(pedido.getItens(), aliquotaPercentual))
+                .itens(itemNotaFiscalFactory.criar(pedido.getItens(), aliquotaPercentual))
                 .destinatario(pedido.getDestinatario())
                 .build();
 
@@ -57,17 +57,5 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
         }
 
         return aliquota;
-    }
-
-    private List<ItemNotaFiscal> criarItensNotaFiscalComTributo(List<Item> itens, double aliquotaPercentual) {
-        return itens.stream()
-                .map(item -> ItemNotaFiscal.builder()
-                        .idItem(item.getIdItem())
-                        .descricao(item.getDescricao())
-                        .valorUnitario(item.getValorUnitario())
-                        .quantidade(item.getQuantidade())
-                        .valorTributoItem(item.getValorUnitario() * aliquotaPercentual)
-                        .build())
-                .collect(Collectors.toList());
     }
 }
