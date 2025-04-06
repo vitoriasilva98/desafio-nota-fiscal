@@ -2,6 +2,7 @@ package br.com.itau.geradornotafiscal.model;
 
 import java.util.List;
 
+import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPF;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -28,6 +29,14 @@ public class Destinatario {
 	@JsonProperty("enderecos")
 	private List<Endereco> enderecos;
 
+	public double obterAliquota(double valorTotalItens) {
+
+		if (this.tipoPessoa == TipoPessoa.FISICA) {
+			return RegimeTributacaoPF.IMPOSTO_DE_RENDA.obterTaxaAliquota(valorTotalItens);
+		} else {
+			return this.regimeTributacao.obterTaxaAliquota(valorTotalItens);
+		}
+	}
 }
 
 

@@ -25,7 +25,7 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
     @Override
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
 
-        double aliquotaPercentual = obterAliquota(pedido);
+        double aliquotaPercentual = pedido.getDestinatario().obterAliquota(pedido.getValorTotalItens());
 
         NotaFiscal notaFiscal = NotaFiscal.builder()
                 .idNotaFiscal(UUID.randomUUID().toString())
@@ -42,20 +42,5 @@ public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
         iFinanceiroService.enviarNotaFiscalParaContasReceber(notaFiscal);
 
         return notaFiscal;
-    }
-
-    private double obterAliquota(Pedido pedido) {
-
-        double aliquota = 0.0;
-        double valorTotalItens = pedido.getValorTotalItens();
-        TipoPessoa tipoPessoa = pedido.getDestinatario().getTipoPessoa();
-
-        if (tipoPessoa == TipoPessoa.FISICA) {
-            aliquota = RegimeTributacaoPF.IMPOSTO_DE_RENDA.obterTaxaAliquota(valorTotalItens);
-        } else if (tipoPessoa == TipoPessoa.JURIDICA) {
-            aliquota = pedido.getDestinatario().getRegimeTributacao().obterTaxaAliquota(valorTotalItens);
-        }
-
-        return aliquota;
     }
 }
