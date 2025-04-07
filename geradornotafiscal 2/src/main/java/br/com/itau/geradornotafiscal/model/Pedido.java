@@ -7,7 +7,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
-import javax.validation.constraints.NotBlank;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
 
@@ -18,7 +18,7 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 public class Pedido {
 
-    @NotBlank(message = "O identificador do pedido é obrigatório")
+    @NotNull(message = "O identificador do pedido é obrigatório")
     @Schema(description = "Identificador do pedido", example = "29")
     @JsonProperty("id_pedido")
     private int idPedido;
@@ -41,9 +41,10 @@ public class Pedido {
     @NotEmpty(message = "É obrigatório que pelos menos tenha um item")
     @Schema(description = "Itens do pedido")
     @JsonProperty("itens")
-    private List<Item> itens;
+    private List<@Valid Item> itens;
 
-    @NotEmpty(message = "O destinatário é obrigatório")
+    @Valid
+    @NotNull(message = "O destinatário é obrigatório")
     @Schema(description = "Detinatário do pedido")
     @JsonProperty("destinatario")
     private Destinatario destinatario;

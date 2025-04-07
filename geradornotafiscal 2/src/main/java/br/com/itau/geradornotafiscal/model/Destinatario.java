@@ -10,6 +10,7 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.NotNull;
@@ -39,12 +40,12 @@ public class Destinatario {
 	@NotEmpty(message = "É obrigatório que o destinatário tenha pelo menos um documento")
 	@Schema(description = "Lista de documentos")
 	@JsonProperty("documentos")
-	private List<Documento> documentos;
+	private List<@Valid Documento> documentos;
 
 	@NotEmpty(message = "É obrigatório que o destinatário tenha pelo menos um endereço")
 	@Schema(description = "Lista de endereços")
 	@JsonProperty("enderecos")
-	private List<Endereco> enderecos;
+	private List<@Valid Endereco> enderecos;
 
 	public double obterAliquota(double valorTotalItens) {
 
