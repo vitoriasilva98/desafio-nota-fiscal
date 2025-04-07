@@ -9,6 +9,8 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 
+import java.time.LocalDate;
+import java.time.format.DateTimeParseException;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -35,6 +37,16 @@ public class GlobalExcecaoHandler {
         Throwable causa = ex.getCause();
         if (causa instanceof InvalidFormatException) {
             InvalidFormatException ife = (InvalidFormatException) causa;
+
+            if (ife.getTargetType().equals(LocalDate.class)) {
+                Map<String, String> erros = new HashMap<>();
+                erros.put("data", "Formato de data inválido. Use o padrão yyyy-MM-dd (ex: 2025-04-02)");
+
+                return ResponseEntity
+                        .badRequest()
+                        .body(new ErroValidacaoResponse("Erro de formatação", erros));
+            }
+
             mensagemErro = String.format("O valor '%s' não é válido para o campo '%s'. Era esperado: %s",
                     ife.getValue(),
                     ife.getPath().get(ife.getPath().size() - 1).getFieldName(),
