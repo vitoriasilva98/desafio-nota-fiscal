@@ -18,6 +18,7 @@ import javax.validation.constraints.NotNull;
 @Builder
 @Getter
 @Setter
+@ToString
 @AllArgsConstructor
 @NoArgsConstructor
 @RegimeTributarioPJValido

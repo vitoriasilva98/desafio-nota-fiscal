@@ -8,6 +8,7 @@ import lombok.*;
 @Setter
 @AllArgsConstructor
 @Builder
+@ToString
 @NoArgsConstructor
 public class ItemNotaFiscal {
 

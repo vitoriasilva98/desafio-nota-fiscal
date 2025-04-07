@@ -16,6 +16,7 @@ import javax.validation.constraints.NotNull;
 @Getter
 @Setter
 @NoArgsConstructor
+@ToString
 public class Pedido {
 
     @NotNull(message = "O identificador do pedido é obrigatório")

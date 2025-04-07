@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class NotaFiscalService implements INotaFiscalService {
+public class NotaFiscalService extends Registro implements INotaFiscalService {
 
     private final IEstoqueService estoqueService;
     private final IRegistroService registroService;
@@ -21,20 +21,31 @@ public class NotaFiscalService implements INotaFiscalService {
 
     @Override
     public NotaFiscal gerarNotaFiscal(Pedido pedido) {
+        logger.info("Iniciando geração da nota fiscal para o pedido - ID: [{}].", pedido.getIdPedido());
+        logger.debug("Pedido: [{}]", pedido);
+        try {
+            NotaFiscal notaFiscal = criarNotaFiscal(pedido);
+            logger.info("Nota Físcal criada com sucesso - ID: [{}].", notaFiscal.getIdNotaFiscal());
+            logger.debug("Nota Fiscal: [{}].", notaFiscal.getIdNotaFiscal());
 
-        NotaFiscal notaFiscal = criarNotaFiscal(pedido);
+            estoqueService.enviarNotaFiscalParaBaixaEstoque(notaFiscal);
+            registroService.registrarNotaFiscal(notaFiscal);
+            entregaService.agendarEntrega(notaFiscal);
+            financeiroService.enviarNotaFiscalParaContasReceber(notaFiscal);
 
-        estoqueService.enviarNotaFiscalParaBaixaEstoque(notaFiscal);
-        registroService.registrarNotaFiscal(notaFiscal);
-        entregaService.agendarEntrega(notaFiscal);
-        financeiroService.enviarNotaFiscalParaContasReceber(notaFiscal);
+            logger.info("A Nota Físcal foi gerada com sucesso - ID: [{}].", notaFiscal.getIdNotaFiscal());
 
-        return notaFiscal;
+            return notaFiscal;
+        } catch (Exception e) {
+            logger.error("Erro ao gerar nota fiscal para o pedido - ID: [{}]", pedido.getIdPedido(), e);
+            throw new RuntimeException(e);
+        }
     }
 
     private NotaFiscal criarNotaFiscal(Pedido pedido) {
         double aliquotaPercentual = pedido.getDestinatario().obterAliquota(pedido.getValorTotalItens());
         double freteComPercentual = pedido.getDestinatario().calcularFreteComBaseNaRegiao(pedido.getValorFrete());
+        logger.debug("Aliquota percentual: [{}] - Frete com Percentual da Região: [{}]", aliquotaPercentual, freteComPercentual);
 
         return NotaFiscal.builder()
                 .idNotaFiscal(UUID.randomUUID().toString())
