@@ -2,6 +2,7 @@ package br.com.itau.geradornotafiscal.model;
 
 import java.util.List;
 
+import br.com.itau.geradornotafiscal.annotations.RegimeTributarioPJValido;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPF;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
@@ -18,6 +19,7 @@ import javax.validation.constraints.NotNull;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
+@RegimeTributarioPJValido
 public class Destinatario {
 
 	@NotBlank(message = "O nome do destinatário é obrigatório")
