@@ -10,6 +10,9 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+
 @Getter
 @Setter
 @Builder
@@ -17,18 +20,22 @@ import lombok.Setter;
 @NoArgsConstructor
 public class Endereco {
 
+    @NotBlank(message = "O cep é obrigatório")
     @Schema(description = "Código de Endereçamento Postal (CEP)", example = "03105003")
     @JsonProperty("cep")
     private String cep;
 
+    @NotBlank(message = "O logradouro é obrigatório")
     @Schema(description = "Logradouro", example = "Avenida Paulista")
     @JsonProperty("logradouro")
     private String logradouro;
 
+    @NotBlank(message = "O número do logradouro é obrigatório")
     @Schema(description = "Numeração do logradouro", example = "52")
     @JsonProperty("numero")
     private String numero;
 
+    @NotBlank(message = "O estado do endereço é obrigatório")
     @Schema(description = "Estado", example = "SP")
     @JsonProperty("estado")
     private String estado;
@@ -37,10 +44,12 @@ public class Endereco {
     @JsonProperty("complemento")
     private String complemento;
 
+    @NotNull(message = "A finalidade do enderço é obrigatória")
     @Schema(description = "Finalidade do endereço", example = "ENTREGA")
     @JsonProperty("finalidade")
     private Finalidade finalidade;
 
+    @NotNull(message = "A região do endereço é obrigatória")
     @Schema(description = "Região", example = "SUDESTE")
     @JsonProperty("regiao")
     private Regiao regiao;

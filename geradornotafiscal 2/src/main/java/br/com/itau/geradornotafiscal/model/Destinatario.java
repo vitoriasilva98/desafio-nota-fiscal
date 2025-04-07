@@ -9,6 +9,10 @@ import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
 import lombok.*;
 
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.NotNull;
+
 @Builder
 @Getter
 @Setter
@@ -16,10 +20,12 @@ import lombok.*;
 @NoArgsConstructor
 public class Destinatario {
 
+	@NotBlank(message = "O nome do destinatário é obrigatório")
 	@Schema(description = "Nome do destinatário", example = "1")
 	@JsonProperty("nome")
 	private String nome;
 
+	@NotNull(message = "O tipo de pessoa é obrigatório")
 	@Schema(description = "Tipo de Pessoa", example = "FISICA")
 	@JsonProperty("tipo_pessoa")
 	private TipoPessoa tipoPessoa;
@@ -28,10 +34,12 @@ public class Destinatario {
 	@JsonProperty("regime_tributacao")
 	private RegimeTributacaoPJ regimeTributacao;
 
+	@NotEmpty(message = "É obrigatório que o destinatário tenha pelo menos um documento")
 	@Schema(description = "Lista de documentos")
 	@JsonProperty("documentos")
 	private List<Documento> documentos;
 
+	@NotEmpty(message = "É obrigatório que o destinatário tenha pelo menos um endereço")
 	@Schema(description = "Lista de endereços")
 	@JsonProperty("enderecos")
 	private List<Endereco> enderecos;

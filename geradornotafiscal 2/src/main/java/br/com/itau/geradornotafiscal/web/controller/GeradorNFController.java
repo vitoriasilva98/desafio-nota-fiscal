@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.validation.Valid;
+
 @Tag(name = "Notas Fiscais", description = "Operações relacionadas a notas fiscais")
 @RequiredArgsConstructor
 @RestController
@@ -26,7 +28,7 @@ public class GeradorNFController {
     @Operation(summary = "Gera uma nova nota fiscal")
     @ApiResponse(responseCode = "201", description = "Nota fiscal criada com sucesso")
     @PostMapping("/gerarNotaFiscal")
-    public ResponseEntity<NotaFiscal> gerarNotaFiscal(@RequestBody Pedido pedido) {
+    public ResponseEntity<NotaFiscal> gerarNotaFiscal(@Valid @RequestBody Pedido pedido) {
         return ResponseEntity
                 .status(HttpStatus.CREATED)
                 .body(notaFiscalService.gerarNotaFiscal(pedido));
