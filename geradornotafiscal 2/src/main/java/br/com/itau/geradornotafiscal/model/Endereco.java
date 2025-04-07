@@ -12,6 +12,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Getter
 @Setter
@@ -30,6 +31,8 @@ public class Endereco {
     @JsonProperty("logradouro")
     private String logradouro;
 
+    @Pattern(regexp = "^(?=.*\\d)[a-zA-Z0-9 ]+$",
+            message = "O valor pode conter apenas letras e números, sem espaços ou símbolos")
     @NotBlank(message = "O número do logradouro é obrigatório")
     @Schema(description = "Numeração do logradouro", example = "52")
     @JsonProperty("numero")
