@@ -1,5 +1,6 @@
 package br.com.itau.geradornotafiscal.model;
 
+import br.com.itau.geradornotafiscal.annotations.DocumentoValido;
 import br.com.itau.geradornotafiscal.enums.TipoDocumento;
 import com.fasterxml.jackson.annotation.JsonProperty;
 import io.swagger.v3.oas.annotations.media.Schema;
@@ -15,10 +16,11 @@ import javax.validation.constraints.NotNull;
 @NoArgsConstructor
 @Getter
 @Setter
+@DocumentoValido
 public class Documento {
 
     @NotBlank(message = "O número do documento é obrigatório")
-    @Schema(description = "Numeração do documento", example = "12345678")
+    @Schema(description = "Numeração do documento", example = "53765188093")
     @JsonProperty("numero")
     private String numero;
 
