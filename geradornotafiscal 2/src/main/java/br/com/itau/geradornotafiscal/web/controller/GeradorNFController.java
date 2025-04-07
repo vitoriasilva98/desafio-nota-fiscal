@@ -7,7 +7,7 @@ import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 
 import br.com.itau.geradornotafiscal.model.Pedido;
-import br.com.itau.geradornotafiscal.service.IGeradorNotaFiscalService;
+import br.com.itau.geradornotafiscal.service.INotaFiscalService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api/pedido")
 public class GeradorNFController {
 
-    private final IGeradorNotaFiscalService notaFiscalService;
+    private final INotaFiscalService notaFiscalService;
 
     @Operation(summary = "Gera uma nova nota fiscal")
     @ApiResponse(responseCode = "201", description = "Nota fiscal criada com sucesso")

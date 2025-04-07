@@ -11,7 +11,7 @@ import java.util.UUID;
 
 @RequiredArgsConstructor
 @Service
-public class GeradorNotaFiscalService implements IGeradorNotaFiscalService {
+public class NotaFiscalService implements INotaFiscalService {
 
     private final IEstoqueService estoqueService;
     private final IRegistroService registroService;

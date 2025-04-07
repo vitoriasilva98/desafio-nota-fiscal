@@ -5,7 +5,7 @@ import br.com.itau.geradornotafiscal.enums.Regiao;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.model.*;
-import br.com.itau.geradornotafiscal.service.impl.GeradorNotaFiscalService;
+import br.com.itau.geradornotafiscal.service.impl.NotaFiscalService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.mockito.InjectMocks;
@@ -15,10 +15,10 @@ import java.util.Arrays;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class GeradorNotaFiscalServiceTest {
+public class NotaFiscalServiceTest {
 
     @InjectMocks
-    private GeradorNotaFiscalService geradorNotaFiscalService;
+    private NotaFiscalService notaFiscalService;
 
     @BeforeEach
     public void setup() {
@@ -48,7 +48,7 @@ public class GeradorNotaFiscalServiceTest {
         item.setQuantidade(4);
         pedido.setItens(Arrays.asList(item));
 
-        NotaFiscal notaFiscal = geradorNotaFiscalService.gerarNotaFiscal(pedido);
+        NotaFiscal notaFiscal = notaFiscalService.gerarNotaFiscal(pedido);
 
         assertEquals(pedido.getValorTotalItens(), notaFiscal.getValorTotalItens());
         assertEquals(1, notaFiscal.getItens().size());
@@ -78,7 +78,7 @@ public class GeradorNotaFiscalServiceTest {
         item.setQuantidade(6);
         pedido.setItens(Arrays.asList(item));
 
-        NotaFiscal notaFiscal = geradorNotaFiscalService.gerarNotaFiscal(pedido);
+        NotaFiscal notaFiscal = notaFiscalService.gerarNotaFiscal(pedido);
 
         assertEquals(pedido.getValorTotalItens(), notaFiscal.getValorTotalItens());
         assertEquals(1, notaFiscal.getItens().size());
