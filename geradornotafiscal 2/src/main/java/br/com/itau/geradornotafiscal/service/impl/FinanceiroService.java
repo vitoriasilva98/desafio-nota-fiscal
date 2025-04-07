@@ -1,5 +1,6 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
+import br.com.itau.geradornotafiscal.exception.FalhaAoEnviarParaContasReceberException;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import br.com.itau.geradornotafiscal.model.Registro;
 import br.com.itau.geradornotafiscal.service.IFinanceiroService;
@@ -17,7 +18,7 @@ public class FinanceiroService extends Registro implements IFinanceiroService {
             logger.info("Foi enviada com sucesso para o departamento de Contas a Receber a Nota Físcal ID: [{}].", notaFiscal.getIdNotaFiscal());
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro durante o envio para o departamento Contas a Receber da Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
-            throw new RuntimeException(e);
+            throw new FalhaAoEnviarParaContasReceberException(e);
         }
     }
 }

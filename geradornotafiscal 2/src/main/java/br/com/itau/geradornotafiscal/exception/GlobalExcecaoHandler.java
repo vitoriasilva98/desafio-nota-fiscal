@@ -56,4 +56,10 @@ public class GlobalExcecaoHandler {
                 .status(HttpStatus.BAD_REQUEST)
                 .body(new ErroSimplesResponse("Corpo inválido", mensagemErro));
     }
+
+    @ExceptionHandler(EnderecoDeEntregaInvalidoException.class)
+    public ResponseEntity<ErroSimplesResponse> handleRegraNegocioException(EnderecoDeEntregaInvalidoException ex) {
+        ErroSimplesResponse erro = new ErroSimplesResponse("Regra de negócio violada", ex.getMessage());
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(erro);
+    }
 }

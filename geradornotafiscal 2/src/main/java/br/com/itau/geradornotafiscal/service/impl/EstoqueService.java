@@ -1,5 +1,6 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
+import br.com.itau.geradornotafiscal.exception.FalhaNaBaixaDeEstoqueException;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import br.com.itau.geradornotafiscal.model.Registro;
 import br.com.itau.geradornotafiscal.service.IEstoqueService;
@@ -17,7 +18,7 @@ public class EstoqueService extends Registro implements IEstoqueService {
             logger.info("O estoque foi atualizado com sucesso para à Nota Físcal ID: [{}].", notaFiscal.getIdNotaFiscal());
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro ao tentar dar baixa no estoque para a Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
-            throw new RuntimeException(e);
+            throw new FalhaNaBaixaDeEstoqueException(e);
         }
     }
 }

@@ -1,5 +1,6 @@
 package br.com.itau.geradornotafiscal.service.impl;
 
+import br.com.itau.geradornotafiscal.exception.*;
 import br.com.itau.geradornotafiscal.factories.ItemNotaFiscalFactory;
 import br.com.itau.geradornotafiscal.model.*;
 import br.com.itau.geradornotafiscal.service.*;
@@ -24,6 +25,13 @@ public class NotaFiscalService extends Registro implements INotaFiscalService {
         logger.info("Iniciando geração da nota fiscal para o pedido - ID: [{}].", pedido.getIdPedido());
         logger.debug("Pedido: [{}]", pedido);
         try {
+            if(!pedido.getDestinatario().possuiEnderecoValidoParaEntrega()){
+                logger.error("O destinatário não possui nenhum endereço válido para a geração da Nota Físcal.");
+                throw new EnderecoDeEntregaInvalidoException(
+                        "O destinatário deve possuir pelo menos um endereço com a finalidade de ENTREGA ou COBRANCA_ENTREGA."
+                );
+            }
+
             NotaFiscal notaFiscal = criarNotaFiscal(pedido);
             logger.info("Nota Físcal criada com sucesso - ID: [{}].", notaFiscal.getIdNotaFiscal());
             logger.debug("Nota Fiscal: [{}].", notaFiscal.getIdNotaFiscal());
@@ -36,9 +44,11 @@ public class NotaFiscalService extends Registro implements INotaFiscalService {
             logger.info("A Nota Físcal foi gerada com sucesso - ID: [{}].", notaFiscal.getIdNotaFiscal());
 
             return notaFiscal;
+        } catch (EnderecoDeEntregaInvalidoException e){
+            throw e;
         } catch (Exception e) {
-            logger.error("Erro ao gerar nota fiscal para o pedido - ID: [{}]", pedido.getIdPedido(), e);
-            throw new RuntimeException(e);
+            logger.error("Ocorreu um erro ao gerar a nota fiscal para o pedido - ID: [{}]", pedido.getIdPedido(), e);
+            throw new FalhaNaGeracaoDaNotaFiscalException(e);
         }
     }
 
