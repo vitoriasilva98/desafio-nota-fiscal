@@ -22,13 +22,16 @@ public class NotaFiscal {
     @JsonProperty("data")
     private LocalDateTime data;
 
-    @Schema(description = "Valor total dos itens da nota", example = "5035.90")
+    @Schema(description = "Valor total dos itens da nota", example = "5000.00")
     @JsonProperty("valor_total_itens")
     private double valorTotalItens;
 
     @Schema(description = "Valor do frete", example = "35.90")
     @JsonProperty("valor_frete")
     private double valorFrete;
+
+    @Schema(description = "Valor total da nota físcal", example = "5035.90")
+    private double valorTotalNotaFiscal;
 
     @Schema(description = "Itens da nota físcal")
     @JsonProperty("itens")

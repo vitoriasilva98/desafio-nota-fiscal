@@ -41,6 +41,7 @@ public class NotaFiscalService implements INotaFiscalService {
                 .data(LocalDateTime.now())
                 .valorTotalItens(pedido.getValorTotalItens())
                 .valorFrete(freteComPercentual)
+                .valorTotalNotaFiscal(pedido.getValorTotalItens() + freteComPercentual)
                 .itens(itemNotaFiscalFactory.criar(pedido.getItens(), aliquotaPercentual))
                 .destinatario(pedido.getDestinatario())
                 .build();

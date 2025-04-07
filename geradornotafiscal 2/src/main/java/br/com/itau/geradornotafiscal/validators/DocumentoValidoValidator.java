@@ -32,6 +32,7 @@ public class DocumentoValidoValidator implements ConstraintValidator<DocumentoVa
         } else if (tipo == TipoDocumento.CNPJ) {
             CNPJValidator cnpjValidator = new CNPJValidator();
             cnpjValidator.initialize(null);
+
             valido = cnpjValidator.isValid(numero, context);
             if (!valido) mensagem = "CNPJ inválido";
         }
