@@ -64,6 +64,12 @@ public class Destinatario {
 				.findFirst()
 				.orElse(0.0);
 	}
+
+	public boolean possuiEnderecoValidoParaEntrega() {
+		long quantidadeEnderecosValidos =  enderecos.stream()
+				.filter(Endereco::ehEnderecoDeEntrega).count();
+		return quantidadeEnderecosValidos > 0;
+	}
 }
 
 
