@@ -1,10 +1,8 @@
-package br.com.itau.calculadoratributos.model;
+package br.com.itau.geradornotafiscal.model;
 
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPF;
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
-import br.com.itau.geradornotafiscal.model.Destinatario;
-import br.com.itau.geradornotafiscal.model.Endereco;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

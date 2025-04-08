@@ -1,8 +1,7 @@
-package br.com.itau.calculadoratributos.model;
+package br.com.itau.geradornotafiscal.model;
 
 import br.com.itau.geradornotafiscal.enums.Finalidade;
 import br.com.itau.geradornotafiscal.enums.Regiao;
-import br.com.itau.geradornotafiscal.model.Endereco;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;

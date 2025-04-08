@@ -1,6 +1,5 @@
-package br.com.itau.calculadoratributos.adapter.out;
+package br.com.itau.geradornotafiscal.adapter.out;
 
-import br.com.itau.geradornotafiscal.adapter.out.EntregaIntegrationAdapter;
 import br.com.itau.geradornotafiscal.model.ItemNotaFiscal;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import org.junit.jupiter.api.BeforeEach;

@@ -1,13 +1,9 @@
-package br.com.itau.calculadoratributos.service;
+package br.com.itau.geradornotafiscal.service;
 
 import br.com.itau.geradornotafiscal.exception.EnderecoDeEntregaInvalidoException;
 import br.com.itau.geradornotafiscal.exception.FalhaNaGeracaoDaNotaFiscalException;
 import br.com.itau.geradornotafiscal.factories.ItemNotaFiscalFactory;
 import br.com.itau.geradornotafiscal.model.*;
-import br.com.itau.geradornotafiscal.service.IEntregaService;
-import br.com.itau.geradornotafiscal.service.IEstoqueService;
-import br.com.itau.geradornotafiscal.service.IFinanceiroService;
-import br.com.itau.geradornotafiscal.service.IRegistroService;
 import br.com.itau.geradornotafiscal.service.impl.NotaFiscalService;
 
 import org.junit.jupiter.api.Test;

@@ -1,9 +1,8 @@
-package br.com.itau.calculadoratributos.validators;
+package br.com.itau.geradornotafiscal.validators;
 
 import br.com.itau.geradornotafiscal.enums.RegimeTributacaoPJ;
 import br.com.itau.geradornotafiscal.enums.TipoPessoa;
 import br.com.itau.geradornotafiscal.model.Destinatario;
-import br.com.itau.geradornotafiscal.validators.RegimeTributarioPJValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

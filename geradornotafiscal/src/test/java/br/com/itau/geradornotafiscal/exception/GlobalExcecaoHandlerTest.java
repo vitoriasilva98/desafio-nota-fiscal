@@ -1,9 +1,5 @@
-package br.com.itau.calculadoratributos.exception;
+package br.com.itau.geradornotafiscal.exception;
 
-import br.com.itau.geradornotafiscal.exception.EnderecoDeEntregaInvalidoException;
-import br.com.itau.geradornotafiscal.exception.ErroSimplesResponse;
-import br.com.itau.geradornotafiscal.exception.ErroValidacaoResponse;
-import br.com.itau.geradornotafiscal.exception.GlobalExcecaoHandler;
 import com.fasterxml.jackson.databind.JsonMappingException;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.junit.jupiter.api.BeforeEach;
