@@ -3,7 +3,7 @@ package br.com.itau.geradornotafiscal.exception;
 import com.fasterxml.jackson.databind.exc.InvalidFormatException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -29,8 +29,8 @@ public class GlobalExcecaoHandler {
         return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(new ErroValidacaoResponse("Campos inválidos", errors));
     }
 
-    @ExceptionHandler(HttpMessageNotReadableException.class)
-    public ResponseEntity<Object> handleNaoFoiPossivelLerAhRequisicao(HttpMessageNotReadableException ex) {
+    @ExceptionHandler(HttpMessageConversionException.class)
+    public ResponseEntity<Object> handleNaoFoiPossivelLerAhRequisicao(HttpMessageConversionException ex) {
         String mensagemErro = "Erro de leitura: verifique se o corpo da requisição está bem formado.";
 
         Throwable causa = ex.getCause();

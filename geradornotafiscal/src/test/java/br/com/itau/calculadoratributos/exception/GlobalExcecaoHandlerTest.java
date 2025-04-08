@@ -12,7 +12,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.http.converter.HttpMessageConversionException;
 import org.springframework.validation.BeanPropertyBindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.MethodArgumentNotValidException;
@@ -23,7 +23,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GlobalExcecaoHandlerTeset {
+public class GlobalExcecaoHandlerTest {
 
     private GlobalExcecaoHandler handler;
 
@@ -63,8 +63,8 @@ public class GlobalExcecaoHandlerTeset {
         // Adiciona um caminho (path) para que o ife possua informação do campo "data"
         ife.prependPath(new JsonMappingException.Reference(new Object(), "data"));
 
-        // Cria a exceção HttpMessageNotReadableException com ife como causa
-        HttpMessageNotReadableException ex = new HttpMessageNotReadableException("Erro de leitura", ife);
+        // Cria a exceção HttpMessageConversionException com ife como causa
+        HttpMessageConversionException ex = new HttpMessageConversionException("Erro de leitura", ife);
 
         ResponseEntity<Object> response = handler.handleNaoFoiPossivelLerAhRequisicao(ex);
 
@@ -81,7 +81,7 @@ public class GlobalExcecaoHandlerTeset {
     void testHandleNaoFoiPossivelLerAhRequisicao_OtherCause() {
         // Cria uma exceção genérica como causa (não InvalidFormatException)
         Exception cause = new Exception("Erro genérico");
-        HttpMessageNotReadableException ex = new HttpMessageNotReadableException("Erro de leitura", cause);
+        HttpMessageConversionException ex = new HttpMessageConversionException("Erro de leitura", cause);
 
         ResponseEntity<Object> response = handler.handleNaoFoiPossivelLerAhRequisicao(ex);
 

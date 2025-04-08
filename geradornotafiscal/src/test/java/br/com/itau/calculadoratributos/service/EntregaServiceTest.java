@@ -55,7 +55,7 @@ public class EntregaServiceTest {
     }
 
     @Test
-    void deveLancarExcecao_QuandoInterruptedExceptionOcorre() throws Exception {
+    void deveLancarExcecao_QuandoInterruptedExceptionOcorre() {
         notaFiscal.setIdNotaFiscal("NF-123");
 
         EntregaService entregaServiceComErro = new EntregaService(entregaIntegrationPort) {
