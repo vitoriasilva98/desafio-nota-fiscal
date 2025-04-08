@@ -17,7 +17,7 @@ import static org.mockito.Mockito.when;
 
 
 @ExtendWith(MockitoExtension.class)
-public class DestinatarioTest {
+class DestinatarioTest {
 
     @Mock
     private Endereco enderecoEntrega;
