@@ -31,7 +31,7 @@ public class RegistroServiceTest {
 
     @Test
     void deveLancarFalhaNoRegistroNotaFiscalException_QuandoInterruptedExceptionOcorre() {
-        RegistroService registroService = new RegistroService() {
+        registroService = new RegistroService() {
             @Override
             public void registrarNotaFiscal(NotaFiscal notaFiscal) {
                 throw new FalhaNoRegistroNotaFiscalException(new InterruptedException("Simulado"));
