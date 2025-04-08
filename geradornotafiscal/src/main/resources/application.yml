@@ -4,6 +4,6 @@ springdoc:
   swagger-ui:
     path: /swagger-ui.html
   info:
-    title: API de geração de Nota Físcal
-    description: Esta API permite a geração da Nota Físcal de pedidos.
+    title: API de geracao de Nota Fiscal
+    description: Esta API permite a geração da Nota Fiscal de pedidos.
     version: 1.0.0
