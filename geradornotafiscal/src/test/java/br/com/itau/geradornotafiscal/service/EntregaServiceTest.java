@@ -1,6 +1,7 @@
 package br.com.itau.geradornotafiscal.service;
 
 import br.com.itau.geradornotafiscal.exception.FalhaNoAgendamentoDaEntregaException;
+import br.com.itau.geradornotafiscal.model.ItemNotaFiscal;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import br.com.itau.geradornotafiscal.port.out.EntregaIntegrationPort;
 import br.com.itau.geradornotafiscal.service.impl.EntregaService;
@@ -12,7 +13,9 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import static org.junit.jupiter.api.Assertions.assertThrows;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -30,6 +33,14 @@ class EntregaServiceTest {
     void configuracaoInicial() {
         MockitoAnnotations.openMocks(this);
         notaFiscal = new NotaFiscal();
+    }
+
+    @Test
+    void deveAgendarEntregaComSucesso() {
+        notaFiscal = NotaFiscal.builder()
+                .idNotaFiscal("NF-003")
+                .itens(List.of(new ItemNotaFiscal()))
+                .build();
 
         entregaIntegrationPort = mock(EntregaIntegrationPort.class);
 
@@ -43,11 +54,6 @@ class EntregaServiceTest {
                 }
             }
         };
-    }
-
-    @Test
-    void deveAgendarEntregaComSucesso() {
-        notaFiscal.setIdNotaFiscal("NF-123");
 
         entregaService.agendarEntrega(notaFiscal);
 
@@ -56,17 +62,19 @@ class EntregaServiceTest {
 
     @Test
     void deveLancarExcecao_QuandoInterruptedExceptionOcorre() {
-        notaFiscal.setIdNotaFiscal("NF-123");
+        notaFiscal = NotaFiscal.builder()
+                .idNotaFiscal("NF-003")
+                .itens(List.of(new ItemNotaFiscal()))
+                .build();
 
-        EntregaService entregaServiceComErro = new EntregaService(entregaIntegrationPort) {
-            @Override
-            public void agendarEntrega(NotaFiscal notaFiscal) {
-                throw new FalhaNoAgendamentoDaEntregaException(new InterruptedException());
-            }
-        };
+        Thread.currentThread().interrupt();
 
-        assertThrows(FalhaNoAgendamentoDaEntregaException.class, () -> {
-            entregaServiceComErro.agendarEntrega(notaFiscal);
-        });
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> entregaService.agendarEntrega(notaFiscal));
+
+        assertNotNull(exception.getCause());
+        assertTrue(exception.getCause() instanceof InterruptedException);
+
+        Thread.interrupted();
     }
 }

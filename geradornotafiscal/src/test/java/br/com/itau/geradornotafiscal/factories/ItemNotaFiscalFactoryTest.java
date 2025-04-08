@@ -11,7 +11,7 @@ import java.util.List;
 import static org.assertj.core.api.AssertionsForInterfaceTypes.assertThat;
 
 @ExtendWith(MockitoExtension.class)
-public class ItemNotaFiscalFactoryTest {
+class ItemNotaFiscalFactoryTest {
 
     @Test
     void deveCriarListaDeItemNotaFiscalComValoresCorretos() {

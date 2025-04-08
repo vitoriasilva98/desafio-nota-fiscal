@@ -1,12 +1,14 @@
 package br.com.itau.geradornotafiscal.service;
 
-import br.com.itau.geradornotafiscal.exception.FalhaAoEnviarParaContasReceberException;
+import br.com.itau.geradornotafiscal.model.ItemNotaFiscal;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import br.com.itau.geradornotafiscal.service.impl.FinanceiroService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -30,23 +32,20 @@ class FinanceiroServiceTest {
     }
 
     @Test
-    void deveLancarExcecao_AoInterromperEnvioDeNotaFiscal() {
+    void deveLancarExcecao_QuandoInterromperEnvioDeNotaFiscal() {
         NotaFiscal notaFiscal = NotaFiscal.builder()
-                .idNotaFiscal("123")
+                .idNotaFiscal("NF-003")
+                .itens(List.of(new ItemNotaFiscal()))
                 .build();
 
-        FinanceiroService serviceComErro = new FinanceiroService() {
-            @Override
-            public void enviarNotaFiscalParaContasReceber(NotaFiscal notaFiscal) {
-                throw new FalhaAoEnviarParaContasReceberException(new InterruptedException("Erro simulado"));
-            }
-        };
+        Thread.currentThread().interrupt();
 
-        FalhaAoEnviarParaContasReceberException ex = assertThrows(
-                FalhaAoEnviarParaContasReceberException.class,
-                () -> serviceComErro.enviarNotaFiscalParaContasReceber(notaFiscal)
-        );
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> financeiroService.enviarNotaFiscalParaContasReceber(notaFiscal));
 
-        assertTrue(ex.getCause() instanceof InterruptedException);
+        assertNotNull(exception.getCause());
+        assertTrue(exception.getCause() instanceof InterruptedException);
+
+        Thread.interrupted();
     }
 }

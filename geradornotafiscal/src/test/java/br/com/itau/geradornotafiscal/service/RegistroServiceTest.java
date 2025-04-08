@@ -1,12 +1,14 @@
 package br.com.itau.geradornotafiscal.service;
 
-import br.com.itau.geradornotafiscal.exception.FalhaNoRegistroNotaFiscalException;
+import br.com.itau.geradornotafiscal.model.ItemNotaFiscal;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import br.com.itau.geradornotafiscal.service.impl.RegistroService;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -31,22 +33,19 @@ class RegistroServiceTest {
 
     @Test
     void deveLancarFalhaNoRegistroNotaFiscalException_QuandoInterruptedExceptionOcorre() {
-        registroService = new RegistroService() {
-            @Override
-            public void registrarNotaFiscal(NotaFiscal notaFiscal) {
-                throw new FalhaNoRegistroNotaFiscalException(new InterruptedException("Simulado"));
-            }
-        };
+        NotaFiscal notaFiscal = NotaFiscal.builder()
+                .idNotaFiscal("NF-003")
+                .itens(List.of(new ItemNotaFiscal()))
+                .build();
 
-        NotaFiscal notaFiscal = new NotaFiscal();
-        notaFiscal.setIdNotaFiscal("NF-123");
+        Thread.currentThread().interrupt();
 
-        FalhaNoRegistroNotaFiscalException exception = assertThrows(
-                FalhaNoRegistroNotaFiscalException.class,
-                () -> registroService.registrarNotaFiscal(notaFiscal)
-        );
+        RuntimeException exception = assertThrows(RuntimeException.class,
+                () -> registroService.registrarNotaFiscal(notaFiscal));
 
+        assertNotNull(exception.getCause());
         assertTrue(exception.getCause() instanceof InterruptedException);
-        assertEquals("Simulado", exception.getCause().getMessage());
+
+        Thread.interrupted();
     }
 }
