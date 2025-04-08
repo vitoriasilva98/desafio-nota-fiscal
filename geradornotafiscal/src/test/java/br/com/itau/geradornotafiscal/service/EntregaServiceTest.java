@@ -16,7 +16,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class EntregaServiceTest {
+class EntregaServiceTest {
 
     @Mock
     private EntregaIntegrationPort entregaIntegrationPort;

@@ -9,7 +9,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class EnderecoTest {
+class EnderecoTest {
 
     @Test
     void deveRetornarTrueQuandoFinalidadeForENTREGA() {

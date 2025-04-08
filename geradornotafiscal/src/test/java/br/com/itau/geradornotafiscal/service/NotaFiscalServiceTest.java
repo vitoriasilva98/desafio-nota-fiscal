@@ -20,7 +20,7 @@ import static org.mockito.ArgumentMatchers.anyList;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
-public class NotaFiscalServiceTest {
+class NotaFiscalServiceTest {
 
     @Mock
     private IEstoqueService estoqueService;

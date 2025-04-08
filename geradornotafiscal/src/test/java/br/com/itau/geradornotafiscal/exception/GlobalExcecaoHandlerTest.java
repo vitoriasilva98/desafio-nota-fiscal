@@ -19,7 +19,7 @@ import java.util.Map;
 import static org.junit.jupiter.api.Assertions.*;
 
 @ExtendWith(MockitoExtension.class)
-public class GlobalExcecaoHandlerTest {
+class GlobalExcecaoHandlerTest {
 
     private GlobalExcecaoHandler handler;
 
