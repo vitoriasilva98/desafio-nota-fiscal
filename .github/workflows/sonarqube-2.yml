@@ -42,7 +42,7 @@ jobs:
           org.sonarsource.scanner.maven:sonar-maven-plugin:sonar
           -Dsonar.projectKey=vitoriasilva98_desafio-nota-fiscal
           -Dsonar.host.url=https://sonarcloud.io
-          -Dsonar.login=${{ secrets.SONAR_TOKEN }}
+          -Dsonar.token=${{ secrets.SONAR_TOKEN }}
           -Dsonar.coverage.jacoco.xmlReportPaths=./geradornotafiscal/target/site/jacoco/jacoco.xml
         working-directory: './geradornotafiscal'
 
