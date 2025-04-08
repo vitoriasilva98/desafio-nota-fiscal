@@ -12,6 +12,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -55,17 +56,18 @@ public class EntregaServiceTest {
 
     @Test
     void deveLancarExcecao_QuandoInterruptedExceptionOcorre() throws Exception {
+        NotaFiscal notaFiscal = new NotaFiscal();
+        notaFiscal.setIdNotaFiscal("NF-123");
+
         EntregaService entregaServiceComErro = new EntregaService(entregaIntegrationPort) {
             @Override
             public void agendarEntrega(NotaFiscal notaFiscal) {
-                throw new FalhaNoAgendamentoDaEntregaException(new InterruptedException("Erro simulado"));
+                throw new FalhaNoAgendamentoDaEntregaException(new InterruptedException());
             }
         };
 
-        try {
+        assertThrows(FalhaNoAgendamentoDaEntregaException.class, () -> {
             entregaServiceComErro.agendarEntrega(notaFiscal);
-        } catch (FalhaNoAgendamentoDaEntregaException e) {
-            assert e.getCause() instanceof InterruptedException;
-        }
+        });
     }
 }
