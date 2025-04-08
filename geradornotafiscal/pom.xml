@@ -14,11 +14,8 @@
 	<description>Aplicacao para calculo de tributos</description>
 	<properties>
 		<java.version>11</java.version>
-
-		<properties>
-			<sonar.organization>vitoria-vitoria</sonar.organization>
-			<sonar.host.url>https://sonarcloud.io</sonar.host.url>
-		</properties>
+		<sonar.organization>vitoria-vitoria</sonar.organization>
+		<sonar.host.url>https://sonarcloud.io</sonar.host.url>
 	</properties>
 	<dependencies>
 
