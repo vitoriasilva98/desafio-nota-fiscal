@@ -11,11 +11,9 @@ import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
 
 @Getter
-@Setter
 @Builder
 @ToString
 @AllArgsConstructor
-@NoArgsConstructor
 public class Endereco {
 
     @NotBlank(message = "O cep é obrigatório")

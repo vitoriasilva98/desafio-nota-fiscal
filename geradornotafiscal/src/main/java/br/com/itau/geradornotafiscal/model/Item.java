@@ -9,7 +9,6 @@ import javax.validation.constraints.NotNull;
 
 @NoArgsConstructor
 @AllArgsConstructor
-@Setter
 @Getter
 @ToString
 public class Item {

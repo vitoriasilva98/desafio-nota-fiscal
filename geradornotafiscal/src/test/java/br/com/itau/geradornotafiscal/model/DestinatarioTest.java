@@ -34,7 +34,7 @@ class DestinatarioTest {
     @Test
     void deveRetornarAliquota_ParaPessoaFisica() {
         destinatario.setTipoPessoa(TipoPessoa.FISICA);
-        List<Double> valorTotalItensList = List.of(500.0, 1000.0, 3500.0, 3501.0);
+        List<Double> valorTotalItensList = List.of(433.0, 1000.0, 3500.0, 3501.0);
 
         for (Double valorTotalItens : valorTotalItensList) {
             double aliquotaEsperada = RegimeTributacaoPF.IMPOSTO_DE_RENDA.obterTaxaAliquota(valorTotalItens);
@@ -54,23 +54,33 @@ class DestinatarioTest {
     }
 
     @Test
-    void deveRetornarAliquotaDeTresPorCentoNoRegimeLucroReal_ParaPessoaJuridica() {
+    void deveRetornarAliquotaDeNovePorCentoNoRegimeLucroReal_ParaPessoaJuridica() {
         destinatario.setTipoPessoa(TipoPessoa.JURIDICA);
         destinatario.setRegimeTributacao(RegimeTributacaoPJ.LUCRO_REAL);
 
-        double aliquota = destinatario.obterAliquota(999.0);
+        double aliquota = destinatario.obterAliquota(1500.0);
 
-        assertEquals(0.03, aliquota);
+        assertEquals(0.09, aliquota);
     }
 
     @Test
-    void deveRetornarAliquotaDeTresPorCentoNoRegimeLucroPresumido_ParaPessoaJuridica() {
+    void deveRetornarAliquotaDeDezesseisPorCentoNoRegimeLucroPresumido_ParaPessoaJuridica() {
         destinatario.setTipoPessoa(TipoPessoa.JURIDICA);
         destinatario.setRegimeTributacao(RegimeTributacaoPJ.LUCRO_PRESUMIDO);
 
-        double aliquota = destinatario.obterAliquota(200.0);
+        double aliquota = destinatario.obterAliquota(5000.0);
 
-        assertEquals(0.03, aliquota);
+        assertEquals(0.16, aliquota);
+    }
+
+    @Test
+    void deveRetornarAliquotaDeVinteisPorCentoNoRegimeLucroPresumido_ParaPessoaJuridica() {
+        destinatario.setTipoPessoa(TipoPessoa.JURIDICA);
+        destinatario.setRegimeTributacao(RegimeTributacaoPJ.LUCRO_PRESUMIDO);
+
+        double aliquota = destinatario.obterAliquota(5500.0);
+
+        assertEquals(0.20, aliquota);
     }
 
     @Test

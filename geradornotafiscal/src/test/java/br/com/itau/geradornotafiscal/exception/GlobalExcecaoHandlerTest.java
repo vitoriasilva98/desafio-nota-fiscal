@@ -74,6 +74,25 @@ class GlobalExcecaoHandlerTest {
     }
 
     @Test
+    void testHandleNaoFoiPossivelLerAhRequisicao_ComInvalidFormatException() {
+
+        InvalidFormatException ife = new InvalidFormatException(null, "Formato inválido", "abc", int.class);
+
+        ife.prependPath(new JsonMappingException.Reference(new Object(), "idPedido"));
+
+        // Cria a exceção HttpMessageConversionException com ife como causa
+        HttpMessageConversionException ex = new HttpMessageConversionException("Erro de leitura", ife);
+
+        ResponseEntity<Object> response = handler.handleNaoFoiPossivelLerAhRequisicao(ex);
+
+        // Verifica que o status é 400 e o corpo é do tipo ErroValidacaoResponse
+        assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
+        ErroSimplesResponse body = (ErroSimplesResponse) response.getBody();
+        assertEquals("Corpo inválido", body.getTitulo());
+        assertEquals("O valor 'abc' não é válido para o campo 'idPedido'. Era esperado: int", body.getDetalhe());
+    }
+
+    @Test
     void testHandleNaoFoiPossivelLerAhRequisicao_OtherCause() {
         // Cria uma exceção genérica como causa (não InvalidFormatException)
         Exception cause = new Exception("Erro genérico");
