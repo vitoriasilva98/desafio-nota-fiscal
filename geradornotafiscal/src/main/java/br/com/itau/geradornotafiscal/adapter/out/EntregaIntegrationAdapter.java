@@ -1,5 +1,6 @@
 package br.com.itau.geradornotafiscal.adapter.out;
 
+import br.com.itau.geradornotafiscal.exception.FalhaNoAgendamentoDaEntregaException;
 import br.com.itau.geradornotafiscal.model.NotaFiscal;
 import br.com.itau.geradornotafiscal.model.Registro;
 import br.com.itau.geradornotafiscal.port.out.EntregaIntegrationPort;
@@ -20,7 +21,8 @@ public class EntregaIntegrationAdapter extends Registro implements EntregaIntegr
             logger.info("Agendamento de entrega criado com sucesso para à Nota Físcal ID: [{}].", notaFiscal.getIdNotaFiscal());
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro ao tentar criar agendamento de entrega para à Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
-            throw new RuntimeException(e);
+            Thread.currentThread().interrupt();
+            throw new FalhaNoAgendamentoDaEntregaException(e);
         }
     }
 }

@@ -18,6 +18,7 @@ public class FinanceiroService extends Registro implements IFinanceiroService {
             logger.info("Foi enviada com sucesso para o departamento de Contas a Receber a Nota Físcal ID: [{}].", notaFiscal.getIdNotaFiscal());
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro durante o envio para o departamento Contas a Receber da Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
+            Thread.currentThread().interrupt();
             throw new FalhaAoEnviarParaContasReceberException(e);
         }
     }

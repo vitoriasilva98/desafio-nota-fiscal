@@ -23,6 +23,7 @@ public class EntregaService extends Registro implements IEntregaService {
             entregaIntegrationPort.criarAgendamentoEntrega(notaFiscal);
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro ao tentar agendar a entrega da Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
+            Thread.currentThread().interrupt();
             throw new FalhaNoAgendamentoDaEntregaException(e);
         }
 

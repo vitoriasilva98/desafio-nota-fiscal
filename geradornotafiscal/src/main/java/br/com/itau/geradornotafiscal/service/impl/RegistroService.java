@@ -19,6 +19,7 @@ public class RegistroService extends Registro implements IRegistroService {
             logger.info("O registro foi realizado com sucesso da Nota Físcal ID: [{}].", notaFiscal.getIdNotaFiscal());
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro durante o registro da Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
+            Thread.currentThread().interrupt();
             throw new FalhaNoRegistroNotaFiscalException(e);
         }
     }

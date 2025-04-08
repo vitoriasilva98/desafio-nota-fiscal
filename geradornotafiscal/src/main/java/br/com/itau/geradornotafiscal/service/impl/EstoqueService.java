@@ -18,6 +18,7 @@ public class EstoqueService extends Registro implements IEstoqueService {
             logger.info("O estoque foi atualizado com sucesso para à Nota Físcal ID: [{}].", notaFiscal.getIdNotaFiscal());
         } catch (InterruptedException e) {
             logger.error("Ocorreu um erro ao tentar dar baixa no estoque para a Nota Físcal ID: [{}]", notaFiscal.getIdNotaFiscal(), e);
+            Thread.currentThread().interrupt();
             throw new FalhaNaBaixaDeEstoqueException(e);
         }
     }
