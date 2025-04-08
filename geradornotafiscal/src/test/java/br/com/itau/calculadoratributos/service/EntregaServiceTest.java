@@ -47,7 +47,7 @@ public class EntregaServiceTest {
 
     @Test
     void deveAgendarEntregaComSucesso() {
-        NotaFiscal notaFiscal = NotaFiscal.builder().idNotaFiscal("NF-123").build();
+        notaFiscal.setIdNotaFiscal("NF-123");
 
         entregaService.agendarEntrega(notaFiscal);
 
@@ -56,7 +56,6 @@ public class EntregaServiceTest {
 
     @Test
     void deveLancarExcecao_QuandoInterruptedExceptionOcorre() throws Exception {
-        NotaFiscal notaFiscal = new NotaFiscal();
         notaFiscal.setIdNotaFiscal("NF-123");
 
         EntregaService entregaServiceComErro = new EntregaService(entregaIntegrationPort) {
